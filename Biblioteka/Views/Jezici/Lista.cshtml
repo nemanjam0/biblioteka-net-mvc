@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Biblioteka.Models.Jezik>
+
+@{
+    ViewData["Title"] = "Jezici";
+}
+
+<h1>Jezici</h1>
+
+<p>
+    <a class="btn btn-success" asp-action="Kreiraj">Kreiraj</a>
+</p>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Naziv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Skracenica)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Skracenica)
+            </td>
+            <td>
+                <a class="btn btn-warning" asp-action="Izmeni" asp-route-id="@item.JezikId">Izmeni</a>
+                <form class="d-inline" asp-action="Obrisi" asp-route-id="@item.JezikId">
+                    <input type="submit" value="Obriši" class="btn btn-danger" />
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

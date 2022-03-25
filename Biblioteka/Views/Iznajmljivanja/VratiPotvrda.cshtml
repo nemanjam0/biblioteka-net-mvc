@@ -1,0 +1,50 @@
+﻿@model Biblioteka.Models.Iznajmljivanje
+
+@{
+    ViewData["Title"] = $"{Model.Korisnik.Ime} ${Model.Korisnik.Prezime} br. članske karte {Model.KorisnikId} - vraćanje knjige";
+}
+
+<h1>Vraćanje knjige</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="VratiPotvrda" asp-route-id="@Model.IznajmljivanjeId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Korisnik" class="control-label font-weight-bold"></label>
+                @Model.Korisnik.Ime @Model.Korisnik.Prezime
+            </div>
+            <div class="form-group">
+                <label asp-for="Bibliotekar" class="control-label font-weight-bold"></label>
+                @Model.Bibliotekar.Ime @Model.Bibliotekar.Prezime
+            </div>
+            <div class="form-group">
+                <label asp-for="Primerak.Knjiga.Naziv" class="control-label font-weight-bold"></label>
+                @Model.Primerak.Knjiga.Naziv (@Model.Primerak.Knjiga.Izdanje. izdanje)
+            </div>
+            <div class="form-group">
+                <label asp-for="PrimerakId" class="control-label font-weight-bold"></label>
+                @Model.PrimerakId
+            </div>
+            <div class="form-group">
+                <label asp-for="RokVracanja" class="control-label font-weight-bold"></label>
+                @Model.RokVracanja.ToString("dd.MM.yyyy.")
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Vrati" class="btn btn-primary" />
+            </div>
+            <input asp-for="IznajmljivanjeId" class="form-control" type="hidden" />
+            <input asp-for="KorisnikId" class="form-control" type="hidden" />
+            <input asp-for="PrimerakId" class="form-control" type="hidden" />
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-primary" asp-action="Lista">Prikaži sve</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

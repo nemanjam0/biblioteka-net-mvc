@@ -1,0 +1,28 @@
+﻿@model Biblioteka.ViewModels.VratiKnjiguVM
+
+@{
+    ViewData["Title"] = "Vraćanje iznajmljenje knjige";
+}
+
+<h1>Vraćanje izanajmljene knjige</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Vrati">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="primerakKnjigeID" class="control-label"></label>
+                <input asp-for="primerakKnjigeID" class="form-control" />
+                <span asp-validation-for="primerakKnjigeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Kreiraj" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

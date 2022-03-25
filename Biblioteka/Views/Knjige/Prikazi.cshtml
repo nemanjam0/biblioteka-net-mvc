@@ -1,0 +1,113 @@
+﻿@model Biblioteka.Models.Knjiga
+
+@{
+    ViewData["Title"] = $"{Model.Naziv} ({Model.Izdanje}. izdanje) - Detalji ";
+}
+<h1>Detalji</h1>
+
+<h4></h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Izmeni">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Naziv" class="font-weight-bold"></label>
+                @Model.Naziv
+            </div>
+            <div class="form-group">
+                <label asp-for="Opis" class="font-weight-bold"></label>
+                @Model.Opis
+            </div>
+            <div class="form-group">
+                <label asp-for="Izdanje" class="font-weight-bold"></label>
+                @Model.Izdanje.
+            </div>
+            <div class="form-group">
+                <label asp-for="GodinaIzdanja" class="font-weight-bold"></label>
+                @Model.GodinaIzdanja.
+            </div>
+            <div class="form-group">
+                <label asp-for="BrojStrana" class="font-weight-bold"></label>
+                @Model.BrojStrana
+            </div>
+            <div class="form-group">
+                <label asp-for="ISBN" class="font-weight-bold"></label>
+                @Model.ISBN
+            </div>
+            <div class="form-group">
+                <label asp-for="Jezik" class="font-weight-bold"></label>
+                @Model.Jezik.Naziv
+            </div>
+            <div class="form-group">
+                <label asp-for="Autori" class="font-weight-bold"></label>
+                @foreach (var autor in Model.Autori)
+                {
+                    @autor.Ime @Html.Raw("&nbsp;") @autor.Prezime @Html.Raw("&nbsp;")
+                }
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    @if (User.IsInRole("Admin") || User.IsInRole("Bibliotekar"))
+    {
+        <a class="btn btn-success mb-3" asp-controller="PrimerciKnjige" asp-action="Kreiraj" asp-route-knjigaId="@Model.KnjigaId">Dodaj primerke</a>
+    }
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PrimerciKnjige.FirstOrDefault().PrimerakKnjigeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PrimerciKnjige.FirstOrDefault().VremeNabavke)
+                </th>
+                @if (User.IsInRole("Admin") || User.IsInRole("Bibliotekar"))
+                {
+                    <th>Akcija</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var primerak in Model.PrimerciKnjige)
+            {
+                var style = "bg-success";
+                if (primerak.Iznajmljivanja.Count > 0)
+                {
+                    style = "bg-danger";
+                }
+            <tr class="@style">
+                <td>
+                    @Html.DisplayFor(model => primerak.PrimerakKnjigeId)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(model => primerak.VremeNabavke)
+                </td>
+                @if (User.IsInRole("Admin") || User.IsInRole("Bibliotekar"))
+                {
+                    <td>
+                        <a class="btn btn-dark" asp-controller="PrimerciKnjige" asp-action="IstorijaIznajmljivanja" asp-route-primerakID="@primerak.PrimerakKnjigeId">Istorija iznajmljivanja</a>
+                        <a class="btn btn-warning" asp-controller="PrimerciKnjige" asp-action="Izmeni" asp-route-id="@primerak.PrimerakKnjigeId">Izmeni</a>
+                        <form class="d-inline" asp-controller="PrimerciKnjige" asp-action="Obrisi" asp-route-id="@primerak.PrimerakKnjigeId">
+                            <input type="submit" value="Obriši" class="btn btn-danger" />
+                        </form>
+                    </td>
+                }
+
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+   
+}

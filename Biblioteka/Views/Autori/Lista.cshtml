@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Biblioteka.Models.Autor>
+
+@{
+    ViewData["Title"] = "Autori - Lista";
+}
+
+<h1>Autori</h1>
+
+<p>
+    <a class="btn btn-success" asp-action="Kreiraj">Kreiraj</a>
+</p>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SrednjeIme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prezime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pol)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SrednjeIme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prezime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pol)
+            </td>
+            <td>
+                <a class="btn btn-warning" asp-action="Izmeni" asp-route-id="@item.AutorId">Izmeni</a>
+                <form class="d-inline" asp-action="Obrisi" asp-route-id="@item.AutorId">
+                    <input type="submit" value="Obriši" class="btn btn-danger" />
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

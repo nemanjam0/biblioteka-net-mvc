@@ -1,0 +1,18 @@
+﻿@model Biblioteka.ViewModels.PaginacijaVM
+@{
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+            
+            <li class="page-item @(Model.ImaPrethodnuStranu==true? "":"disabled")">
+                <a class="page-link" href="#" tabindex="-1"></a>
+            </li>
+            <li class="page-item"><a class="page-link" href="@Model.URLPrethodneStrane">Prethodna</a></li>
+            <li class="page-item active">
+                <a class="page-link" href="#">@Model.TrenutnaStrana <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="page-item @(Model.ImaSledecuStranu==true? "":"disabled")">
+                <a class="page-link" href="@Model.URLSledeceStrane">Sledeća</a>
+            </li>
+        </ul>
+    </nav>
+}

@@ -1,0 +1,72 @@
+﻿@model Biblioteka.ViewModels.KreirajKnjiguVM
+
+@{
+    ViewData["Title"] = $"{Model.Knjiga.Naziv} (${Model.Knjiga.Izdanje}. izdanje) - Izmena ";
+}
+
+<h1>Izmeni</h1>
+
+<h4>Knjige</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Izmeni">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Knjiga.KnjigaId" />
+            <div class="form-group">
+                <label asp-for="Knjiga.Naziv" class="control-label"></label>
+                <input asp-for="Knjiga.Naziv" class="form-control" />
+                <span asp-validation-for="Knjiga.Naziv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Knjiga.Opis" class="control-label"></label>
+                <textarea asp-for="Knjiga.Opis" class="form-control" rows="6"></textarea>
+                <span asp-validation-for="Knjiga.Opis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Knjiga.Izdanje" class="control-label"></label>
+                <input asp-for="Knjiga.Izdanje" class="form-control" />
+                <span asp-validation-for="Knjiga.Izdanje" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Knjiga.GodinaIzdanja" class="control-label"></label>
+                <input asp-for="Knjiga.GodinaIzdanja" class="form-control" />
+                <span asp-validation-for="Knjiga.GodinaIzdanja" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Knjiga.BrojStrana" class="control-label"></label>
+                <input asp-for="Knjiga.BrojStrana" class="form-control" />
+                <span asp-validation-for="Knjiga.BrojStrana" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Knjiga.ISBN" class="control-label"></label>
+                <input asp-for="Knjiga.ISBN" class="form-control" />
+                <span asp-validation-for="Knjiga.ISBN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Knjiga.Jezik" class="control-label"></label>
+                @Html.DropDownListFor(m => m.Knjiga.JezikId, Model.Jezici, "Odaberi jezik")
+                <span asp-validation-for="Jezici" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Autori" class="control-label"></label>
+                <select id="AutoriMultiple" asp-for="izabraniAutoriId" asp-items="Model.Autori"></select>
+                <span asp-validation-for="Autori" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Izmeni" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-primary" asp-action="Lista">Prikaži sve</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        <script>$('#AutoriMultiple').select2();</script>
+    }
+}

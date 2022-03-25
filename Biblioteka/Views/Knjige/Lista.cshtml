@@ -1,0 +1,118 @@
+﻿@model Biblioteka.ViewModels.PaginiranaListaVM<Biblioteka.ViewModels.PretragaKnjigaVM>
+
+@{
+    ViewData["Title"] = $"Knjige - {Model.Podaci.Strana}. strana";
+}
+
+<h1>Knjige</h1>
+<h3>Pretraga</h3>
+<form asp-action="Lista" method="GET" class="row">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-6">
+        <label asp-for="Podaci.Naziv" class="control-label"></label>
+        <input asp-for="Podaci.Naziv" class="form-control" />
+        <span asp-validation-for="Podaci.Naziv" class="text-danger"></span>
+    </div>
+    <div class="col-6">
+        <label asp-for="Podaci.ISBN" class="control-label"></label>
+        <input asp-for="Podaci.ISBN" class="form-control" />
+        <span asp-validation-for="Podaci.ImeAutora" class="text-danger"></span>
+    </div>
+    <div class="col-6">
+        <label asp-for="Podaci.Izdanje" class="control-label"></label>
+        <input asp-for="Podaci.Izdanje" class="form-control" />
+        <span asp-validation-for="Podaci.Izdanje" class="text-danger"></span>
+    </div>
+    <div class="col-6">
+        <label asp-for="Podaci.ImeAutora" class="control-label"></label>
+        <input asp-for="Podaci.ImeAutora" class="form-control" />
+        <span asp-validation-for="Podaci.ImeAutora" class="text-danger"></span>
+    </div>
+    <div class="col-6">
+        <div class="form-group">
+            <input type="submit" value="Pretraži" class="mt-3 btn btn-primary" />
+        </div>
+    </div>
+</form>
+@if (User.IsInRole("Admin") || User.IsInRole("Bibliotekar"))
+{
+    <p>
+        <a class="btn btn-success" asp-action="Kreiraj">Kreiraj</a>
+    </p>
+}
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Podaci.Knjige.FirstOrDefault().NazivKnjige)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Podaci.Knjige.FirstOrDefault().IzdanjeKnjige)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Podaci.Knjige.FirstOrDefault().BrojIznajmljenihPrimeraka)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Podaci.Knjige.FirstOrDefault().BrojPrimeraka)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Podaci.Knjige.FirstOrDefault().ISBN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Podaci.Knjige.FirstOrDefault().NazivJezika)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Podaci.Knjige.FirstOrDefault().AutoriKnjige)
+            </th>
+            <th>
+
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Podaci.Knjige)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NazivKnjige)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IzdanjeKnjige).
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrojIznajmljenihPrimeraka)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrojPrimeraka)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ISBN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NazivJezika)
+                </td>
+                <td>
+                    @foreach (var autor in item.AutoriKnjige)
+                    {
+                        @Html.DisplayFor(modelItem => autor.Ime)
+                        @Html.Raw("&nbsp;")
+                        @Html.DisplayFor(modelItem => autor.Prezime)
+                        @Html.Raw("&nbsp;")
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-dark" asp-action="Prikazi" asp-route-id="@item.KnjigaId">Info</a>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Bibliotekar"))
+                    {
+                        <a class="btn btn-warning" asp-action="Izmeni" asp-route-id="@item.KnjigaId">Izmeni</a>
+                        <form class="d-inline" asp-action="Obrisi" asp-route-id="@item.KnjigaId">
+                            <input type="submit" value="Obriši" class="btn btn-danger" />
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@await Html.PartialAsync("_Pagination", Model.Paginator)

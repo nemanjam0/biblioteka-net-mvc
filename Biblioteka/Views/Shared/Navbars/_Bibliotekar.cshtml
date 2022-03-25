@@ -1,0 +1,15 @@
+﻿@if (User.IsInRole("Bibliotekar"))
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Knjige" asp-action="Lista">Knjige</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Autori" asp-action="Lista">Autori</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Korisnici" asp-action="Lista">Korisnici</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Novi korisnik</a>
+    </li>
+}

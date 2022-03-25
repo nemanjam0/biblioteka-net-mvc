@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Biblioteka.ViewModels.ListaPrimerakaKnjigeVM>
+
+    @{
+    ViewData["Title"] = "Lista iznajmljivanih knjiga";
+    }
+
+    <h1>Iznajmljene knjige</h1>
+    <span class="badge-warning rounded-pill px-2">Još uvek kod korisnika</span>&nbsp; <span class="badge-danger rounded-pill px-2">Kasni sa vraćanjem</span>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PrimerakKnjigaId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NazivKnjige)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IzdanjeKnjige)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VremeNabavke)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImeKorisnika)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImeBibliotekara)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VremeUzimanja)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RokVracanja)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DatumVracanja)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var boja = "";
+                if(item.DatumVracanja is null)
+                {
+                    boja = "bg-warning";
+                    if(item.RokVracanja<DateTime.Now)
+                    {
+                        boja = "bg-danger";
+                    }
+                }
+            <tr class="@boja">
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrimerakKnjigaId)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NazivKnjige)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IzdanjeKnjige)@Html.Raw(".")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VremeNabavke)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImeKorisnika)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImeBibliotekara)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VremeUzimanja)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RokVracanja)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumVracanja)
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>

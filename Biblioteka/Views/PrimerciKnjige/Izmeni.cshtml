@@ -1,0 +1,42 @@
+﻿@model Biblioteka.ViewModels.PrimerakKnjigeVM
+
+@{
+    ViewData["Title"] = $"{Model.PrimerakKnjige.Knjiga.Naziv} (${Model.PrimerakKnjige.Knjiga.Izdanje}.) - br. ${Model.PrimerakKnjige.PrimerakKnjigeId} - Izmena";
+}
+
+<h1>Izmeni</h1>
+
+<h4>@Model.PrimerakKnjige.Knjiga.Naziv  - br. @Model.PrimerakKnjige.PrimerakKnjigeId</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Izmeni">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PrimerakKnjige.PrimerakKnjigeId" />
+            <div class="form-group">
+                <label asp-for="PrimerakKnjige.Knjiga.Naziv" class="control-label"></label>
+                @Html.DropDownListFor(m => m.PrimerakKnjige.KnjigaId, Model.Knjige, "Odaberi knjigu", new { @id = "KnjigeSelect" })
+                <span asp-validation-for="Knjige" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrimerakKnjige.VremeNabavke" class="control-label"></label>
+                <input asp-for="PrimerakKnjige.VremeNabavke" class="form-control" />
+                <span asp-validation-for="PrimerakKnjige.VremeNabavke" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Izmeni" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-primary" asp-action="Lista">Prikaži sve</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        <script>$('#KnjigeSelect').select2();</script>
+    }
+}

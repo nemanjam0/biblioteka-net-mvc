@@ -1,0 +1,86 @@
+﻿@model Biblioteka.Models.PrimerakKnjige
+
+@{
+    ViewData["Title"] = $"{Model.Knjiga.Naziv} ({Model.Knjiga.Izdanje}. izdanje) - br. {Model.PrimerakKnjigeId} - Istorija iznajmljivanja";
+}
+<h1>Istorija iznajmljivanja</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PrimerakKnjigeId" class="font-weight-bold"></label>
+                @Model.PrimerakKnjigeId
+            </div>
+            <div class="form-group">
+                <label asp-for="Knjiga.Naziv" class="font-weight-bold"></label>
+                @Model.Knjiga.Naziv
+            </div>
+            <div class="form-group">
+                <label asp-for="Knjiga.Izdanje" class="font-weight-bold"></label>
+                @Model.Knjiga.Izdanje.
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Iznajmljivanja.FirstOrDefault().Korisnik)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Iznajmljivanja.FirstOrDefault().Bibliotekar)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Iznajmljivanja.FirstOrDefault().VremeUzimanja)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Iznajmljivanja.FirstOrDefault().RokVracanja)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Iznajmljivanja.FirstOrDefault().DatumVracanja)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var iznajmljivanje in Model.Iznajmljivanja)
+            {
+                var style = "bg-success";
+                if (iznajmljivanje.DatumVracanja == null)
+                {
+                    style = "bg-danger";
+                }
+            <tr class="@style">
+                <td>
+                    @iznajmljivanje.Korisnik.Ime @iznajmljivanje.Korisnik.Prezime
+
+                </td>
+                <td>
+                    @iznajmljivanje.Bibliotekar?.Ime @iznajmljivanje.Bibliotekar?.Prezime
+                </td>
+                <td>
+                    @Html.DisplayFor(model => iznajmljivanje.VremeUzimanja)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => iznajmljivanje.RokVracanja)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => iznajmljivanje.DatumVracanja)
+                </td>
+                
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+   
+}

@@ -1,0 +1,85 @@
+﻿@model Biblioteka.ViewModels.PaginiranaListaVM<Biblioteka.ViewModels.PretragaKorisnikaVM>
+@{
+    ViewData["Title"] = "Korisnici - Lista";
+}
+
+<h1>Pretraga</h1>
+
+<form asp-action="Lista" method="GET" class="row">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-6">
+        <label asp-for="Podaci.Ime" class="control-label"></label>
+        <input asp-for="Podaci.Ime" class="form-control" />
+        <span asp-validation-for="Podaci.Ime" class="text-danger"></span>
+    </div>
+    <div class="col-6">
+        <label asp-for="Podaci.Prezime" class="control-label"></label>
+        <input asp-for="Podaci.Prezime" class="form-control" />
+        <span asp-validation-for="Podaci.Prezime" class="text-danger"></span>
+    </div>
+    <div class="col-6">
+        <label asp-for="Podaci.Email" class="control-label"></label>
+        <input asp-for="Podaci.Email" class="form-control" />
+        <span asp-validation-for="Podaci.Email" class="text-danger"></span>
+    </div>
+    <div class="col-6">
+        <label asp-for="Podaci.Id" class="control-label"></label>
+        <input asp-for="Podaci.Id" class="form-control" />
+        <span asp-validation-for="Podaci.Id" class="text-danger"></span>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <input type="submit" value="Pretraži" class="mt-3 btn btn-primary" />
+        </div>
+    </div>
+</form>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Podaci.Korisnici.FirstOrDefault().Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Podaci.Korisnici.FirstOrDefault().Ime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Podaci.Korisnici.FirstOrDefault().Prezime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Podaci.Korisnici.FirstOrDefault().Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Podaci.Korisnici.FirstOrDefault().VazenjeClanskeKarte)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Podaci.Korisnici)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prezime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VazenjeClanskeKarte)
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-action="ProduziClanskuKartu" asp-route-id="@item.Id">Produži člansku</a>
+                    <a class="btn btn-warning" asp-controller="Iznajmljivanja" asp-action="ListaZaKorisnika" asp-route-id="@item.Id">Pregled iznajmljivanja</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@await Html.PartialAsync("_Pagination", Model.Paginator)
+

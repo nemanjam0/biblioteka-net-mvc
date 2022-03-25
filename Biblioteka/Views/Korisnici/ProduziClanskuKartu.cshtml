@@ -1,0 +1,46 @@
+﻿@model Biblioteka.ViewModels.ProduziClanskuKartuVM
+
+@{
+    ViewData["Title"] = $"{Model.Ime} ${Model.Prezime} Clanska karta br. ${Model.korisnikId}) - Produžavanje";
+}
+
+<h1>Produžavanje članske karte</h1>
+
+<h4>@Model.Ime @Model.Prezime</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ProduziClanskuKartu">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="korisnikId" />
+            <div class="form-group">
+                <label asp-for="korisnikId" class="control-label font-weight-bold"></label>
+                @Html.DisplayFor(k=>k.korisnikId)
+                <input asp-for="korisnikId" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <label asp-for="Ime" class="control-label font-weight-bold"></label>
+                @Html.DisplayFor(k => k.Ime)
+            </div>
+            <div class="form-group">
+                <label asp-for="Prezime" class="control-label font-weight-bold"></label>
+                @Html.DisplayFor(k => k.Prezime)
+            </div>
+            <div class="form-group">
+                <label asp-for="RokVazenja" class="control-label"></label>
+                <input asp-for="RokVazenja" class="form-control" />
+                <span asp-validation-for="RokVazenja" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Produži" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        <script>$('#AutoriMultiple').select2();</script>
+    }
+}
